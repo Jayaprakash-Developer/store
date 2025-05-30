@@ -1,0 +1,55 @@
+<configuration>
+	<contextName>ezee</contextName>
+	<property name="DEV_HOME" value="d:/store_logs" />
+
+	<appender name="CONSOLE"
+		class="ch.qos.logback.core.ConsoleAppender">
+		<!-- <encoder>
+			<pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n
+			</pattern>
+		</encoder> -->
+		<encoder>
+			<pattern>%date %level %logger{10} [%file:%line] - %msg%n
+			</pattern>
+		</encoder>
+	</appender>
+
+	<appender name="fileAppender"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${DEV_HOME}/main.log</file>
+		<append>true</append>
+		<rollingPolicy
+			class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${DEV_HOME}/archived/debug.%d{yyyy-MM-dd_HH-mm}.log
+			</fileNamePattern>
+			<maxHistory>30</maxHistory>
+		</rollingPolicy>
+		<encoder>
+			<pattern>%date %level %logger{10} [%file:%line] - %msg%n
+			</pattern>
+		</encoder>
+	</appender>
+
+	<logger name="com.ezee.store.controller"
+		level="info" additivity="false">
+		<appender-ref ref="fileAppender" />
+	</logger>
+	
+	<logger name="com.ezee.store.repository"
+		level="info" additivity="false">
+		<appender-ref ref="fileAppender" />
+	</logger>
+	
+	<logger name="com.ezee.store.service"
+		level="info" additivity="false">
+		<appender-ref ref="fileAppender" />
+	</logger>
+
+	<root>
+		<level value="info" />
+		<appender-ref ref="fileAppender" />
+		<!-- <appender-ref ref="CONSOLE" /> -->
+	</root>
+
+</configuration>
+
